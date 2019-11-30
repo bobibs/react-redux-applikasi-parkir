@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // Import from action
-import { BiayaMobil, BiayaMotor } from '../redux/actions';
+import { BiayaMobil, BiayaMotor, ResetState } from '../redux/actions';
 
 class Homepage extends Component {
 	state = {
@@ -19,6 +19,10 @@ class Homepage extends Component {
 		this.setState({
 			button: 1
 		});
+	};
+
+	resetButton = () => {
+		this.props.ResetState();
 	};
 
 	parkirMobil = () => {
@@ -63,18 +67,23 @@ class Homepage extends Component {
 					<div className='form-group' style={{ width: '205px' }}>
 						<input type='number' className='form-control' ref='durasi' />
 					</div>
-					<div className='form-group' style={{ width: '100px' }}>
+					<div className='d-flex form-group' style={{ width: '200px' }}>
 						<button
 							onClick={this.state.button === -1 ? this.parkirMobil : this.parkirMotor}
-							className='btn btn-sm btn-danger form-control'>
+							className='btn btn-sm btn-danger form-control mr-3'>
 							Cek Biaya
+						</button>
+						<button
+							onClick={this.resetButton}
+							className='btn btn-sm btn-secondary form-control'>
+							Reset
 						</button>
 					</div>
 					<h3 className='mt-5'>Biaya Parkir</h3>
 					<h5
 						style={{ border: '1px solid #777', width: '200px' }}
 						className='mt-3 py-1'>
-						Rp {this.props.biaya}
+						Rp {this.props.counter}
 					</h5>
 				</center>
 			</div>
@@ -84,11 +93,12 @@ class Homepage extends Component {
 
 const mapStateToProps = state => {
 	return {
-		biaya: state.counter
+		counter: state.counter
 	};
 };
 
 export default connect(mapStateToProps, {
 	BiayaMobil,
-	BiayaMotor
+	BiayaMotor,
+	ResetState
 })(Homepage);

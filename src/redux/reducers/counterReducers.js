@@ -1,4 +1,4 @@
-import { MOBIL, MOTOR } from '../types';
+import { MOBIL, MOTOR, RESET } from '../types';
 
 const INITIAL_STATE = 0;
 
@@ -11,6 +11,10 @@ export default (state = INITIAL_STATE, action) => {
 		case MOTOR:
 			console.log('reducer', action);
 			return state + action.payload * 1000;
+
+		case RESET:
+			console.log('reducer', action);
+			return state * 0;
 
 		default:
 			return state;
